@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreEventRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class StoreEventRequest extends FormRequest
             'location' => ['required', 'string', 'max:255'],
             'starts_at' => ['required', 'date', 'after:now'],
             'meetup_group_id' => [
-                'required', 'integer', 'exists:meetup_groups,id'
+                'required', 'integer', Rule::exists('meetup_groups','id')->where('user_id',$this->user()->id)
             ]
         ];
     }

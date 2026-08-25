@@ -22,8 +22,12 @@ class EventController extends Controller
         ->orderBy('starts_at')
         ->get();
 
+        $user = auth()->user();
+
         return Inertia::render('events/index', [
             'events' => $events,
+            'canCreateEvent' => $user ? $user->meetupGroups()->exists() 
+            : false,
         ]);
     }
 
@@ -38,9 +42,7 @@ class EventController extends Controller
 
     public function create(): Response
     {
-        $meetupGroups = MeetupGroup::query()
-        ->orderBy('name')
-        ->get(['id', 'name']);
+        $meetupGroups = auth()->user()->meetupGroups()->orderBy('name')->get(['id', 'name']);
 
         return Inertia::render('events/create', [
             'meetupGroups' => $meetupGroups
