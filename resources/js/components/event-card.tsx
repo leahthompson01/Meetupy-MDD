@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { show } from '@/routes/events';
 import type { Event } from '@/types';
+import { show } from '@/routes/events';
 
 export default function EventCard({ event }: { event: Event }) {
     return (

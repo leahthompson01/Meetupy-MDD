@@ -15,4 +15,9 @@ class Event extends Model
     {
         return $this->belongsTo(MeetupGroup::class);
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
