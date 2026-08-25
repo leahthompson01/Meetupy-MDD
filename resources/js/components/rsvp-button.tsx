@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
-import { destroy, store } from '@/actions/App/Http/Controllers/RsvpController';
 import type { Event } from '@/types';
+import { destroy, store } from '@/actions/App/Http/Controllers/RsvpController';
 
 interface Props {
     event: Event;

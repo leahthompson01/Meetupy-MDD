@@ -1,13 +1,16 @@
 import { Head, Link } from '@inertiajs/react';
+import RsvpButton from '@/components/rsvp-button';
 import type { Event } from '@/types';
 import { edit, index, show } from '@/routes/events';
 
 interface Props {
     event: Event;
     canEdit: boolean;
+    isRsvped: boolean;
+    attendeeCount: number;
 }
 
-export default function EventShow({ event, canEdit }: Props) {
+export default function EventShow({ event, canEdit, isRsvped, attendeeCount }: Props) {
     return (
         <>
             <Head title={event.title} />
@@ -43,6 +46,12 @@ export default function EventShow({ event, canEdit }: Props) {
                 {event.description && (
                     <p className="mt-4 text-sm">{event.description}</p>
                 )}
+
+                <p className="my-4">
+                {attendeeCount} {attendeeCount === 1 ? 'attendee' : 'attendees'}
+                </p>
+
+                <RsvpButton event={event} isRsvped={isRsvped} />
             </div>
         </>
     );

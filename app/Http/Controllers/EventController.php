@@ -41,6 +41,8 @@ class EventController extends Controller
         return Inertia::render('events/show', [
             'event' => $event,
             'canEdit' => $user?->can('update', $event) ?? false,
+            'isRsvped' => $user ? $event->users()->where('user_id', $user->id)->exists() : false,
+            'attendeeCount' => $event->users()->count(),
         ]);
     }
 
