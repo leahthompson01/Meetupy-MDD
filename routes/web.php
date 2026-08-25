@@ -12,7 +12,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('events', [EventController::class, 'store'])->name('events.store');
 
-    // what will be our routes to edit events?
+    Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+
+    Route::patch('events/{event}', [EventController::class, 'update'])->name('events.update');
 });
 
 Route::get('events', [EventController::class,'index'])->name('events.index');
