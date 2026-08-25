@@ -4,14 +4,15 @@ import { edit, index, show } from '@/routes/events';
 
 interface Props {
     event: Event;
+    canEdit: boolean;
 }
 
-export default function EventShow({ event }: Props) {
+export default function EventShow({ event, canEdit }: Props) {
     return (
         <>
             <Head title={event.title} />
 
-            <Link href={edit.url(event)}>Edit</Link>
+            {canEdit && <Link href={edit.url(event)}>Edit</Link>}
 
             <div className="mt-4 rounded-xl border border-sidebar-border/70 p-6 dark:border-sidebar-border">
                 <h1 className="text-2xl font-semibold">{event.title}</h1>

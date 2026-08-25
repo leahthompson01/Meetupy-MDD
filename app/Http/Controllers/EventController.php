@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\MeetupGroup;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Str;
@@ -35,8 +36,11 @@ class EventController extends Controller
     {
         $event->load('meetupGroup.user');
 
+        $user = auth()->user();
+
         return Inertia::render('events/show', [
             'event' => $event,
+            'canEdit' => $user?->can('update', $event) ?? false,
         ]);
     }
 
@@ -64,6 +68,9 @@ class EventController extends Controller
 
     public function edit(Event $event): Response
     {
+
+        Gate::authorize('update', $event);
+
         return Inertia::render('events/edit', [
             'event' => $event,
         ]);
@@ -71,6 +78,9 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
+        Gate::authorize('update', $event);
+
+
         $event->update($request->validated());
 
         return redirect()->route('events.show', $event);
